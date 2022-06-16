@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>BIOS201 Searching The Logic of Life</title>
+    <link>https://dbrg77.github.io/SUSTech-BIOS201/</link>
+    <description>Recent content on BIOS201 Searching The Logic of Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Thu, 16 Jun 2022 10:07:27 +0800</lastBuildDate><atom:link href="https://dbrg77.github.io/SUSTech-BIOS201/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Welcome To BIOS201</title>
+      <link>https://dbrg77.github.io/SUSTech-BIOS201/posts/welcome-to-bios201/</link>
+      <pubDate>Thu, 16 Jun 2022 10:07:27 +0800</pubDate>
+      
+      <guid>https://dbrg77.github.io/SUSTech-BIOS201/posts/welcome-to-bios201/</guid>
+      <description>Welcome to BIOS201. To be updated &amp;hellip;</description>
+    </item>
+    
+  </channel>
+</rss>
