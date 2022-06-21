@@ -87,15 +87,15 @@
         <div class="nav-links">
             
             <div class="nav-link">
-                <a href="https://dbrg77.github.io/"><span data-feather='home'></span> Home </a>
+                <a href="https://dbrg77.github.io/SUSTech-BIOS201"><span data-feather='home'></span> Home </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://dbrg77.github.io/posts/"><span data-feather='list'></span> Posts </a>
+                <a href="https://dbrg77.github.io/SUSTech-BIOS201/posts/"><span data-feather='list'></span> Posts </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://dbrg77.github.io/about/"><span data-feather='user'></span> About </a>
+                <a href="https://dbrg77.github.io/SUSTech-BIOS201/about/"><span data-feather='user'></span> About </a>
             </div>
             
             <div class="nav-link">
@@ -120,15 +120,15 @@
             <ul class="nav-hamburger-list visibility-hidden">
                 
                 <li class="nav-item">
-                    <a href="https://dbrg77.github.io/"><span data-feather='home'></span> Home </a>
+                    <a href="https://dbrg77.github.io/SUSTech-BIOS201"><span data-feather='home'></span> Home </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://dbrg77.github.io/posts/"><span data-feather='list'></span> Posts </a>
+                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/posts/"><span data-feather='list'></span> Posts </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://dbrg77.github.io/about/"><span data-feather='user'></span> About </a>
+                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/about/"><span data-feather='user'></span> About </a>
                 </li>
                 
                 <li class="nav-item">
@@ -183,14 +183,14 @@ grep <span style="color:#f1fa8c">&#39;&gt;&#39;</span> MGI358.SNP.fa | cut -c 2-
 zcat 1kg_phase3_release_20130502_vcf/*.gz | grep -w -f MGI358.SNP.id.txt &gt; tmp
 
 <span style="color:#6272a4"># add the VCF header to the output</span>
-cat &lt;<span style="color:#ff79c6">(</span>zcat 1kg_phase3_release_20130502_vcf/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz | head -n <span style="color:#bd93f9">253</span> | tail -n 1<span style="color:#ff79c6">)</span> tmp &gt; MGI358_in_1kg.tsv
+cat &lt;<span style="color:#ff79c6">(</span>zcat 1kg_phase3_release_20130502_vcf/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz | head -n <span style="color:#bd93f9">253</span> | tail -n 1<span style="color:#ff79c6">)</span> tmp &gt; MGI358_in_1kg_phase3.tsv
 
 <span style="color:#6272a4"># remove intermediate file</span>
 rm tmp
-</code></pre></div><p>Now we could convert the genotypes of each invidual from the <code>MGI358_in_1kg.tsv</code> file into a matrix by simply doing:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python output_1kg_gt_matrix.py &gt; 1kg_genotype_matrix.tsv
+</code></pre></div><p>Now we could convert the genotypes of each invidual from the <code>MGI358_in_1kg_phase3.tsv</code> file into a matrix by simply doing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python output_1kg_gt_matrix.py &gt; 1kg_phase3_MGI358_genotype_matrix.tsv
 </code></pre></div><p>Here is the content of <code>output_1kg_gt_matrix.py</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">with</span> <span style="color:#8be9fd;font-style:italic">open</span>(<span style="color:#f1fa8c">&#39;MGI358_in_1kg.tsv&#39;</span>) <span style="color:#ff79c6">as</span> fh:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">with</span> <span style="color:#8be9fd;font-style:italic">open</span>(<span style="color:#f1fa8c">&#39;MGI358_in_1kg_phase3.tsv&#39;</span>) <span style="color:#ff79c6">as</span> fh:
     header <span style="color:#ff79c6">=</span> fh<span style="color:#ff79c6">.</span>readline()<span style="color:#ff79c6">.</span>strip()<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span>)
     <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#39;</span> <span style="color:#ff79c6">%</span> (header[<span style="color:#bd93f9">2</span>], <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span><span style="color:#ff79c6">.</span>join(header[<span style="color:#bd93f9">9</span>:])))
     <span style="color:#ff79c6">for</span> line <span style="color:#ff79c6">in</span> fh:
@@ -201,7 +201,7 @@ rm tmp
             num<span style="color:#ff79c6">.</span>append(<span style="color:#8be9fd;font-style:italic">str</span>(<span style="color:#8be9fd;font-style:italic">int</span>(a1) <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">int</span>(a2)))
         <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#39;</span> <span style="color:#ff79c6">%</span> (rec[<span style="color:#bd93f9">2</span>], <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span><span style="color:#ff79c6">.</span>join(num)))
 </code></pre></div><h3 id="3-perform-pca">3. Perform PCA</h3>
-<p>It turns out that 199 out of 214 SNVs from the <code>MGI358.SNP.fa</code> are in the 2504 individuals. Therefore, the <code>1kg_genotype_matrix.tsv</code> file is a 199 $\times$ 2504 matrix. Once we have this file, we are finally ready to perform PCA using the SNVs in this course to see if they can discriminate different populations.</p>
+<p>It turns out that 199 out of 214 SNVs from the <code>MGI358.SNP.fa</code> are in the 2504 individuals. Therefore, the <code>1kg_phase3_genotype_matrix.tsv</code> file is a 199 $\times$ 2504 matrix. Once we have this file, we are finally ready to perform PCA using the SNVs in this course to see if they can discriminate different populations.</p>
 <p>Like always, we need some tools for that purpose. In this case, we need specific python packages, including <code>numpy</code>, <code>pandas</code> and <code>scikit-learn</code>. We also need <code>matplotlib</code> and <code>seaborn</code> for the plotting. In addition, we want to use <code>jupyterlab</code> to document the code and output for the purpose of reproducibility. In this case, the exact version does not really matter, so you can just install them by:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">conda install numpy pandas scikit-learn matplotlib seaborn
 </code></pre></div><p>Once the packages are installed, you start with:</p>
@@ -224,24 +224,24 @@ mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39
 mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39;xtick.labelsize&#39;</span>] <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">14</span>
 mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39;ytick.labelsize&#39;</span>] <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">14</span>
 mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39;figure.dpi&#39;</span>] <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">100</span>
-</code></pre></div><p>Now we load the genotype data (<code>1kg_genotype_matrix.tsv</code>) and the meta data (<code>integrated_call_samples_v3.20130502.ALL.panel</code>). We also need to make sure the samples, <em>i.e.</em> individuals, appear in the same order in both data:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sample_genotype <span style="color:#ff79c6">=</span> pd<span style="color:#ff79c6">.</span>read_csv(<span style="color:#f1fa8c">&#39;1kg_genotype_matrix.tsv&#39;</span>, sep <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span>, index_col <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>)
-sample_info <span style="color:#ff79c6">=</span> pd<span style="color:#ff79c6">.</span>read_csv(<span style="color:#f1fa8c">&#39;1kg_phase3_release_20130502_vcf/integrated_call_samples_v3.20130502.ALL.panel&#39;</span>,
-                          sep <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span>, index_col <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>, usecols<span style="color:#ff79c6">=</span>[<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">1</span>,<span style="color:#bd93f9">2</span>,<span style="color:#bd93f9">3</span>])
-sample_info <span style="color:#ff79c6">=</span> sample_info<span style="color:#ff79c6">.</span>loc[sample_genotype<span style="color:#ff79c6">.</span>columns, :]
+</code></pre></div><p>Now we load the genotype data (<code>1kg_phase3_MGI358_genotype_matrix.tsv</code>) and the meta data (<code>integrated_call_samples_v3.20130502.ALL.panel</code>). We also need to make sure the samples, <em>i.e.</em> individuals, appear in the same order in both data:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">phase3_genotype <span style="color:#ff79c6">=</span> pd<span style="color:#ff79c6">.</span>read_csv(<span style="color:#f1fa8c">&#39;1kg_phase3_MGI358_genotype_matrix.tsv&#39;</span>, sep <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span>, index_col <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>)
+phase3_info <span style="color:#ff79c6">=</span> pd<span style="color:#ff79c6">.</span>read_csv(<span style="color:#f1fa8c">&#39;1kg_phase3_release_20130502_vcf/integrated_call_samples_v3.20130502.ALL.panel&#39;</span>,
+                           sep <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span>, index_col <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>, usecols<span style="color:#ff79c6">=</span>[<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">1</span>,<span style="color:#bd93f9">2</span>,<span style="color:#bd93f9">3</span>])
+phase3_info <span style="color:#ff79c6">=</span> phase3_info<span style="color:#ff79c6">.</span>loc[phase3_genotype<span style="color:#ff79c6">.</span>columns, :]
 </code></pre></div><p>We could perform PCA using the <code>scikit-learn</code> package. The good thing about the models in <code>scikit-learn</code> is that they all pretty much have the same &ldquo;grammar&rdquo; to use. You always create an instance of your model. Then you use the methods associated with the instance to do certain things. Very often, it is <code>.fit</code> to let the model to learn the data, then <code>.transform</code> to apply dimensionality reduction.</p>
 <p>In terms of PCA, this is how it is done:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pca <span style="color:#ff79c6">=</span> PCA(n_components<span style="color:#ff79c6">=</span><span style="color:#bd93f9">2</span>)              <span style="color:#6272a4"># create the instance</span>
-pca<span style="color:#ff79c6">.</span>fit(sample_genotype<span style="color:#ff79c6">.</span>T)             <span style="color:#6272a4"># fit the modle</span>
-X_r <span style="color:#ff79c6">=</span> pca<span style="color:#ff79c6">.</span>transform(sample_genotype<span style="color:#ff79c6">.</span>T) <span style="color:#6272a4"># apply dimensionality reduction</span>
-sample_info[<span style="color:#f1fa8c">&#39;PC1&#39;</span>] <span style="color:#ff79c6">=</span> X_r[:, <span style="color:#bd93f9">0</span>]
-sample_info[<span style="color:#f1fa8c">&#39;PC2&#39;</span>] <span style="color:#ff79c6">=</span> X_r[:, <span style="color:#bd93f9">1</span>]
+pca<span style="color:#ff79c6">.</span>fit(phase3_genotype<span style="color:#ff79c6">.</span>T)             <span style="color:#6272a4"># fit the modle</span>
+X_r <span style="color:#ff79c6">=</span> pca<span style="color:#ff79c6">.</span>transform(phase3_genotype<span style="color:#ff79c6">.</span>T) <span style="color:#6272a4"># apply dimensionality reduction</span>
+phase3_info[<span style="color:#f1fa8c">&#39;PC1&#39;</span>] <span style="color:#ff79c6">=</span> X_r[:, <span style="color:#bd93f9">0</span>]
+phase3_info[<span style="color:#f1fa8c">&#39;PC2&#39;</span>] <span style="color:#ff79c6">=</span> X_r[:, <span style="color:#bd93f9">1</span>]
 </code></pre></div><p>Now we could make the visualisation:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, axs <span style="color:#ff79c6">=</span> plt<span style="color:#ff79c6">.</span>subplots(figsize <span style="color:#ff79c6">=</span> (<span style="color:#bd93f9">14</span>,<span style="color:#bd93f9">7</span>), ncols<span style="color:#ff79c6">=</span><span style="color:#bd93f9">2</span>, sharex<span style="color:#ff79c6">=</span><span style="color:#ff79c6">True</span>, sharey<span style="color:#ff79c6">=</span><span style="color:#ff79c6">True</span>)
 
-sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> sample_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;super_pop&#39;</span>,
+sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> phase3_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;super_pop&#39;</span>,
                 edgecolor <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">None</span>, palette <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Set1&#39;</span>, s <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>, ax <span style="color:#ff79c6">=</span> axs[<span style="color:#bd93f9">0</span>])
-sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> sample_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;gender&#39;</span>,
+sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> phase3_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;gender&#39;</span>,
                 edgecolor <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">None</span>, palette <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Set1&#39;</span>, s <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>, ax <span style="color:#ff79c6">=</span> axs[<span style="color:#bd93f9">1</span>])
 
 <span style="color:#ff79c6">for</span> ax <span style="color:#ff79c6">in</span> axs:
@@ -262,17 +262,17 @@ pca<span style="color:#ff79c6">.</span>components_[<span style="color:#bd93f9">0
 
 <span style="color:#6272a4"># the above result indicates that the 67th feature contributes the most to the negative side (non-AFR)</span>
 <span style="color:#6272a4"># the 78th feature contributes the most to the positive side (AFR)</span>
-<span style="color:#8be9fd;font-style:italic">print</span>(sample_genotype<span style="color:#ff79c6">.</span>index[<span style="color:#bd93f9">67</span>])
-<span style="color:#8be9fd;font-style:italic">print</span>(sample_genotype<span style="color:#ff79c6">.</span>index[<span style="color:#bd93f9">78</span>])
+<span style="color:#8be9fd;font-style:italic">print</span>(phase3_genotype<span style="color:#ff79c6">.</span>index[<span style="color:#bd93f9">67</span>])
+<span style="color:#8be9fd;font-style:italic">print</span>(phase3_genotype<span style="color:#ff79c6">.</span>index[<span style="color:#bd93f9">78</span>])
 </code></pre></div><p>We get <code>rs3916235</code> and <code>rs2814778</code>. We could look at their values in each individual:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sample_info[<span style="color:#f1fa8c">&#39;rs3916235&#39;</span>] <span style="color:#ff79c6">=</span> sample_genotype<span style="color:#ff79c6">.</span>loc[<span style="color:#f1fa8c">&#39;rs3916235&#39;</span>,]<span style="color:#ff79c6">.</span>astype(<span style="color:#8be9fd;font-style:italic">str</span>)
-sample_info[<span style="color:#f1fa8c">&#39;rs2814778&#39;</span>] <span style="color:#ff79c6">=</span> sample_genotype<span style="color:#ff79c6">.</span>loc[<span style="color:#f1fa8c">&#39;rs2814778&#39;</span>,]<span style="color:#ff79c6">.</span>astype(<span style="color:#8be9fd;font-style:italic">str</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">phase3_info[<span style="color:#f1fa8c">&#39;rs3916235&#39;</span>] <span style="color:#ff79c6">=</span> phase3_genotype<span style="color:#ff79c6">.</span>loc[<span style="color:#f1fa8c">&#39;rs3916235&#39;</span>,]<span style="color:#ff79c6">.</span>astype(<span style="color:#8be9fd;font-style:italic">str</span>)
+phase3_info[<span style="color:#f1fa8c">&#39;rs2814778&#39;</span>] <span style="color:#ff79c6">=</span> phase3_genotype<span style="color:#ff79c6">.</span>loc[<span style="color:#f1fa8c">&#39;rs2814778&#39;</span>,]<span style="color:#ff79c6">.</span>astype(<span style="color:#8be9fd;font-style:italic">str</span>)
 
 fig, axs <span style="color:#ff79c6">=</span> plt<span style="color:#ff79c6">.</span>subplots(figsize <span style="color:#ff79c6">=</span> (<span style="color:#bd93f9">14</span>,<span style="color:#bd93f9">7</span>), ncols<span style="color:#ff79c6">=</span><span style="color:#bd93f9">2</span>, sharex<span style="color:#ff79c6">=</span><span style="color:#ff79c6">True</span>, sharey<span style="color:#ff79c6">=</span><span style="color:#ff79c6">True</span>)
 
-sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> sample_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;rs3916235&#39;</span>,
+sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> phase3_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;rs3916235&#39;</span>,
                 edgecolor <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">None</span>, palette <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Set1&#39;</span>, s <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>, ax <span style="color:#ff79c6">=</span> axs[<span style="color:#bd93f9">0</span>])
-sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> sample_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;rs2814778&#39;</span>,
+sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> phase3_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;rs2814778&#39;</span>,
                 edgecolor <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">None</span>, palette <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Set2&#39;</span>, s <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>, ax <span style="color:#ff79c6">=</span> axs[<span style="color:#bd93f9">1</span>])
 
 <span style="color:#ff79c6">for</span> ax <span style="color:#ff79c6">in</span> axs:

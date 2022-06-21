@@ -1,4 +1,4 @@
-with open('MGI358_in_1kg.tsv') as fh:
+with open('MGI358_in_1kg_phase3.tsv') as fh:
     header = fh.readline().strip().split('\t')
     print('%s\t%s' % (header[2], '\t'.join(header[9:])))
     for line in fh:

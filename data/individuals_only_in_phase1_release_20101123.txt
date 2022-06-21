@@ -1,4 +1,4 @@
-sample  pop     super_pop       tech
+sample	pop	super_pop	tech
 HG00104	GBR	EUR	ABI_SOLID
 HG00124	GBR	EUR	ILLUMINA
 HG00134	GBR	EUR	ABI_SOLID
