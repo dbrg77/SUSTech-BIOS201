@@ -87,15 +87,15 @@
         <div class="nav-links">
             
             <div class="nav-link">
-                <a href="https://dbrg77.github.io/SUSTech-BIOS201/"><span data-feather='home'></span> Home </a>
+                <a href="https://dbrg77.github.io/"><span data-feather='home'></span> Home </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://dbrg77.github.io/SUSTech-BIOS201/posts/"><span data-feather='list'></span> Posts </a>
+                <a href="https://dbrg77.github.io/posts/"><span data-feather='list'></span> Posts </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://dbrg77.github.io/SUSTech-BIOS201/about/"><span data-feather='user'></span> About </a>
+                <a href="https://dbrg77.github.io/about/"><span data-feather='user'></span> About </a>
             </div>
             
             <div class="nav-link">
@@ -120,15 +120,15 @@
             <ul class="nav-hamburger-list visibility-hidden">
                 
                 <li class="nav-item">
-                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/"><span data-feather='home'></span> Home </a>
+                    <a href="https://dbrg77.github.io/"><span data-feather='home'></span> Home </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/posts/"><span data-feather='list'></span> Posts </a>
+                    <a href="https://dbrg77.github.io/posts/"><span data-feather='list'></span> Posts </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/about/"><span data-feather='user'></span> About </a>
+                    <a href="https://dbrg77.github.io/about/"><span data-feather='user'></span> About </a>
                 </li>
                 
                 <li class="nav-item">
@@ -172,7 +172,7 @@
 </blockquote>
 <p>That looks very clear and makes sense. We don&rsquo;t really need all of those SNVs, just the 214 SNVs we are investigating in this course.</p>
 <h3 id="2-get-the-data-from-the-1000-genome-project">2. Get the data from the 1000 Genome Project</h3>
-<p>Now let&rsquo;s get some data from the 1000 Genome Project. Go to the <a href="http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/"><strong>IGSR FTP site</strong></a>, or the <a href="https://ftp-trace.ncbi.nih.gov/1000genomes/ftp/release/20130502"><strong>NCBI FTP counterpart</strong></a>. Here you will find the 2504 individuals in their phase 3 study. The meta data is in the <code>integrated_call_samples_v3.20130502.ALL.panel</code> file. You will also see <code>ALL.{chr}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz</code> files. Those are the VCF, one file per chromosome. The file sizes are big, and we only need the 214 SNVs we are interested in. In theory, we could directly extract those SNVs from the VCF file using <code>bcftools</code> or <code>tabix</code> without downloading them. However, my internet connection is not stable and we might need them in future, so I decide to download them to my local machine. I used the NCBI FTP since it is faster in my university. I organised all the url into a <a href="/data/1kg_phase3_release_20130502_vcf_url.txt"><strong>text file</strong></a>, and download the data using <code>wget</code>:</p>
+<p>Now let&rsquo;s get some data from the 1000 Genome Project. Go to the <a href="http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/"><strong>IGSR FTP site</strong></a>, or the <a href="https://ftp-trace.ncbi.nih.gov/1000genomes/ftp/release/20130502"><strong>NCBI FTP counterpart</strong></a>. Here you will find the 2504 individuals in their phase 3 study. The meta data is in the <code>integrated_call_samples_v3.20130502.ALL.panel</code> file. You will also see <code>ALL.{chr}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz</code> files. Those are the VCF, one file per chromosome. The file sizes are big, and we only need the 214 SNVs we are interested in. In theory, we could directly extract those SNVs from the VCF file using <code>bcftools</code> or <code>tabix</code> without downloading them. However, my internet connection is not stable and we might need them in future, so I decide to download them to my local machine. I used the NCBI FTP since it is faster in my university. I organised all the url into a <a href="https://dbrg77.github.io/SUSTech-BIOS201/data/1kg_phase3_release_20130502_vcf_url.txt"><strong>text file</strong></a>, and download the data using <code>wget</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget -c -P 1kg_phase3_release_20130502_vcf <span style="color:#f1fa8c">\
 </span><span style="color:#f1fa8c"></span>     -i 1kg_phase3_release_20130502_vcf_url.txt
 </code></pre></div><p>I could extract those SNVs based on the locations, which should be very quick with <code>bcftools</code>. However, I get more accurate results if I just use the dbSNP ID. Therefore, I&rsquo;m doing this in a slower way:</p>
@@ -250,7 +250,7 @@ sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79
     ax<span style="color:#ff79c6">.</span>legend(title<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;&#39;</span>, frameon <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">False</span>)
 
 plt<span style="color:#ff79c6">.</span>savefig(<span style="color:#f1fa8c">&#39;PCA_by_superpop_gender.pdf&#39;</span>, bbox_inches <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;tight&#39;</span>)
-</code></pre></div><p><img src="/data/PCA_by_superpop_gender.pdf" alt=""></p>
+</code></pre></div><p><img src="https://dbrg77.github.io/SUSTech-BIOS201/data/PCA_by_superpop_gender.pdf" alt=""></p>
 <h3 id="pratice">Pratice</h3>
 <ul>
 <li>Describe the results</li>
@@ -284,13 +284,13 @@ axs[<span style="color:#bd93f9">0</span>]<span style="color:#ff79c6">.</span>set
 axs[<span style="color:#bd93f9">1</span>]<span style="color:#ff79c6">.</span>set_title(<span style="color:#f1fa8c">&#39;rs2814778&#39;</span>)
     
 plt<span style="color:#ff79c6">.</span>savefig(<span style="color:#f1fa8c">&#39;PCA_by_SNVs.pdf&#39;</span>, bbox_inches <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;tight&#39;</span>)
-</code></pre></div><p><img src="/data/PCA_by_SNVs.pdf" alt=""></p>
+</code></pre></div><p><img src="https://dbrg77.github.io/SUSTech-BIOS201/data/PCA_by_SNVs.pdf" alt=""></p>
 <h3 id="practice">Practice</h3>
 <ul>
 <li>Check those two SNVs in dbSNP to see what they are</li>
 <li>Can you do similar things on PC2</li>
 </ul>
-<p>All the above codes and plots can be found in this <a href="/data/1kg_genotype_analysis.ipynb"><strong>notebook</strong></a>. You can download it and run by yourself. Or you could have a look at <a href="/data/1kg_genotype_analysis.html"><strong>an HTML verion</strong></a> of it. They also contain a bit more stuff where we use differnt models to predict the super population of new data.</p>
+<p>All the above codes and plots can be found in this <a href="https://dbrg77.github.io/SUSTech-BIOS201/data/1kg_genotype_analysis.ipynb"><strong>notebook</strong></a>. You can download it and run by yourself. Or you could have a look at <a href="https://dbrg77.github.io/SUSTech-BIOS201/data/1kg_genotype_analysis.html"><strong>an HTML verion</strong></a> of it. They also contain a bit more stuff where we use differnt models to predict the super population of new data.</p>
 <p>I hope this is helpful.</p>
 <section class="footnotes" role="doc-endnotes">
 <hr>

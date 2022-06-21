@@ -87,15 +87,15 @@
         <div class="nav-links">
             
             <div class="nav-link">
-                <a href="https://dbrg77.github.io/SUSTech-BIOS201/"><span data-feather='home'></span> Home </a>
+                <a href="https://dbrg77.github.io/"><span data-feather='home'></span> Home </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://dbrg77.github.io/SUSTech-BIOS201/posts/"><span data-feather='list'></span> Posts </a>
+                <a href="https://dbrg77.github.io/posts/"><span data-feather='list'></span> Posts </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://dbrg77.github.io/SUSTech-BIOS201/about/"><span data-feather='user'></span> About </a>
+                <a href="https://dbrg77.github.io/about/"><span data-feather='user'></span> About </a>
             </div>
             
             <div class="nav-link">
@@ -120,15 +120,15 @@
             <ul class="nav-hamburger-list visibility-hidden">
                 
                 <li class="nav-item">
-                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/"><span data-feather='home'></span> Home </a>
+                    <a href="https://dbrg77.github.io/"><span data-feather='home'></span> Home </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/posts/"><span data-feather='list'></span> Posts </a>
+                    <a href="https://dbrg77.github.io/posts/"><span data-feather='list'></span> Posts </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/about/"><span data-feather='user'></span> About </a>
+                    <a href="https://dbrg77.github.io/about/"><span data-feather='user'></span> About </a>
                 </li>
                 
                 <li class="nav-item">
@@ -181,7 +181,7 @@ make install   <span style="color:#6272a4"># copy the programs to your $PATH</sp
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">conda install -c bioconda bwa samtools bcftools tabix
 </code></pre></div><p>Those tools, together with some commonly used commands in Linux, are all we need for this section.</p>
 <h2 id="22-read-alignment-and-variant-calling">2.2 Read alignment and variant calling</h2>
-<p>Once the required softwares are installed, you are ready to align your reads to the reference genome. First, create a directory called <code>bios201</code> by typing <code>mkdir bios201</code>. You can do everything inside that directory. Then, get the reference <code>fasta</code> file <a href="/data/MGI358.SNP.fa"><strong>MGI358.SNP.fa</strong></a>, and put it in your directory. Build the index of the reference by typing the following command, which is required for the read alignment step later:</p>
+<p>Once the required softwares are installed, you are ready to align your reads to the reference genome. First, create a directory called <code>bios201</code> by typing <code>mkdir bios201</code>. You can do everything inside that directory. Then, get the reference <code>fasta</code> file <a href="https://dbrg77.github.io/SUSTech-BIOS201/data/MGI358.SNP.fa"><strong>MGI358.SNP.fa</strong></a>, and put it in your directory. Build the index of the reference by typing the following command, which is required for the read alignment step later:</p>
 <pre tabindex="0"><code>bwa index MGI358.SNP.fa
 </code></pre><p>Once it is done, you should have some new files in the directory. Your directory should look like this:</p>
 <pre tabindex="0"><code>bios201
@@ -193,11 +193,11 @@ make install   <span style="color:#6272a4"># copy the programs to your $PATH</sp
 └── MGI358.SNP.fa.sa
 </code></pre><p>Now you can put your own sequencing reads (the <code>.fastq.gz</code> file) to the <code>bios201</code> directory and start the read alignment. If your experiment has failed and you do not have your <code>fastq</code> file, you can just use one of the following data from the <a href="https://www.internationalgenome.org"><strong>1000 Genome Project</strong></a>:</p>
 <ul>
-<li><a href="/data/HG00303_EUR.fastq.gz"><strong>HG00303_EUR.fastq.gz</strong></a></li>
-<li><a href="/data/HG00512_EAS.fastq.gz"><strong>HG00512_EAS.fastq.gz</strong></a></li>
-<li><a href="/data/HG01452_AMR.fastq.gz"><strong>HG01452_AMR.fastq.gz</strong></a></li>
-<li><a href="/data/HG01590_SAS.fastq.gz"><strong>HG01590_SAS.fastq.gz</strong></a></li>
-<li><a href="/data/HG03383_AFR.fastq.gz"><strong>HG03383_AFR.fastq.gz</strong></a></li>
+<li><a href="https://dbrg77.github.io/SUSTech-BIOS201/data/HG00303_EUR.fastq.gz"><strong>HG00303_EUR.fastq.gz</strong></a></li>
+<li><a href="https://dbrg77.github.io/SUSTech-BIOS201/data/HG00512_EAS.fastq.gz"><strong>HG00512_EAS.fastq.gz</strong></a></li>
+<li><a href="https://dbrg77.github.io/SUSTech-BIOS201/data/HG01452_AMR.fastq.gz"><strong>HG01452_AMR.fastq.gz</strong></a></li>
+<li><a href="https://dbrg77.github.io/SUSTech-BIOS201/data/HG01590_SAS.fastq.gz"><strong>HG01590_SAS.fastq.gz</strong></a></li>
+<li><a href="https://dbrg77.github.io/SUSTech-BIOS201/data/HG03383_AFR.fastq.gz"><strong>HG03383_AFR.fastq.gz</strong></a></li>
 </ul>
 <p>Those data are truncated to just contain a few thousand reads around the locations we are intested in. It is small so that your laptop can handle them without any problems. I will use <code>HG00303_EUR.fastq.gz</code> for the demonstration. Align the reads using the following steps:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#6272a4"># align the reads to the reference</span>
@@ -302,7 +302,7 @@ bcftools mpileup -f GRCh38/GRCh38.fa HG00303_EUR_to_GRCh38_sorted.bam | <span st
 chr1    76344917        .       A       C       74      .       DP=3;VDB=0.431015;SGB=-0.511536;MQSB=1;MQ0F=0;AC=2;AN=2;DP4=0,0,2,1;MQ=60       GT:PL   1/1:104,9,0
 chr1    196145102       .       G       A       132     .       DP=6;VDB=0.0602347;SGB=-0.590765;MQSB=1;MQ0F=0;AC=2;AN=2;DP4=0,0,4,1;MQ=60      GT:PL   1/1:162,15,0
 </code></pre><p>The content in the current VCF file is slightly different from the previous one. The first column is now the chromosome names. The second column indicates the position of the SNV. Those are useful and important pieces of information. However, do the variants have any effect on our phenotypes? Do we know anything about them? In order to figue out that, we need to compare the variants to a database containing many SNPs that we know about. If the variant in your genome is present in the database, it is relative easy to find out what it does based on literatures.</p>
-<p>You probably noticed that the values in the third column of the current VCF file are all <code>.</code>. Now let&rsquo;s annotate the variant with the <code>rsXXXX</code> ID in the dbSNP database. First, we need the variants in the database in the VCF format. Go to the <a href="https://www.ncbi.nlm.nih.gov/snp/"><strong>dbSNP database</strong></a>, then click the <code>FTP Download</code> at the right hand side. Go all the way to the <code>organisms -&gt; human_9606_b151_GRCh38p7 -&gt; VCF</code> directory, and the <code>00-All.vcf.gz</code> file is what you need. However, it is really big, and I have prepared a subset that is enough for us to use in this section. You can download the truncated version (<a href="/data/dbSNP_subset_formatted.vcf"><strong>dbSNP_subset_formatted.vcf</strong></a>) to your own compouter and put it under the <code>bios201</code> directory.</p>
+<p>You probably noticed that the values in the third column of the current VCF file are all <code>.</code>. Now let&rsquo;s annotate the variant with the <code>rsXXXX</code> ID in the dbSNP database. First, we need the variants in the database in the VCF format. Go to the <a href="https://www.ncbi.nlm.nih.gov/snp/"><strong>dbSNP database</strong></a>, then click the <code>FTP Download</code> at the right hand side. Go all the way to the <code>organisms -&gt; human_9606_b151_GRCh38p7 -&gt; VCF</code> directory, and the <code>00-All.vcf.gz</code> file is what you need. However, it is really big, and I have prepared a subset that is enough for us to use in this section. You can download the truncated version (<a href="https://dbrg77.github.io/SUSTech-BIOS201/data/dbSNP_subset_formatted.vcf"><strong>dbSNP_subset_formatted.vcf</strong></a>) to your own compouter and put it under the <code>bios201</code> directory.</p>
 <p>Before we could perform the annotation, we need to compress and index the VCF files using <code>bgzip</code> and <code>tabix</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#6272a4"># compress with bgzip</span>
 bgzip HG00303_EUR_to_GRCh38_all.vcf
