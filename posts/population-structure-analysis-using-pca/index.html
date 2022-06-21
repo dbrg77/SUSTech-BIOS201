@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Section 3: Population Structure Analysis</title>
+    <meta name="description" content="by School of Life Sciences at SUSTech &#43; BGI-Shenzhen">
+    <meta name="keywords" content='blog, gokarna, hugo, data science, biology, genomics'>
+
+    <meta property="og:url" content="https://dbrg77.github.io/SUSTech-BIOS201/posts/population-structure-analysis-using-pca/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Section 3: Population Structure Analysis">
+    <meta property="og:description" content="by School of Life Sciences at SUSTech &#43; BGI-Shenzhen">
+    <meta property="og:image" content="/images/profile_avatar.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Section 3: Population Structure Analysis">
+    <meta name="twitter:description" content="by School of Life Sciences at SUSTech &#43; BGI-Shenzhen">
+    <meta property="twitter:domain" content="https://dbrg77.github.io/SUSTech-BIOS201/posts/population-structure-analysis-using-pca/">
+    <meta property="twitter:url" content="https://dbrg77.github.io/SUSTech-BIOS201/posts/population-structure-analysis-using-pca/">
+    <meta name="twitter:image" content="/images/profile_avatar.jpg">
+
+    
+    <link rel="canonical" href="https://dbrg77.github.io/SUSTech-BIOS201/posts/population-structure-analysis-using-pca/" />
+
+    <link rel="stylesheet" type="text/css" href="https://dbrg77.github.io/SUSTech-BIOS201//css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://dbrg77.github.io/SUSTech-BIOS201//css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://dbrg77.github.io/SUSTech-BIOS201//css/dark.css">
+
+    <script src="https://dbrg77.github.io/SUSTech-BIOS201//js/svg-injector.min.js"></script>
+    <script src="https://dbrg77.github.io/SUSTech-BIOS201//js/feather-icons.min.js"></script>
+    <script src="https://dbrg77.github.io/SUSTech-BIOS201//js/main.js"></script>
+
+    
+    
+        <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.16/dist/katex.min.css" integrity="sha384-6LkG2wmY8FK9E0vU9OOr8UvLwsaqUg9SETfpq4uTCN1agNe8HRdE9ABlk+fVx6gZ" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.16/dist/katex.min.js" integrity="sha384-31El76TwmbHj4rF9DyLsygbq6xoIobG0W+jqXim+a3dU9W53tdH3A/ngRPxOzzaB" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.16/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+    </script>
+  
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://dbrg77.github.io/SUSTech-BIOS201/">
+                <img src="https://dbrg77.github.io/SUSTech-BIOS201//images/profile_avatar.jpg" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://dbrg77.github.io/SUSTech-BIOS201/">BIOS201 Searching The Logic of Life</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://dbrg77.github.io/SUSTech-BIOS201/"><span data-feather='home'></span> Home </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://dbrg77.github.io/SUSTech-BIOS201/posts/"><span data-feather='list'></span> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://dbrg77.github.io/SUSTech-BIOS201/about/"><span data-feather='user'></span> About </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/dbrg77/SUSTech-BIOS201"><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/"><span data-feather='home'></span> Home </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/posts/"><span data-feather='list'></span> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://dbrg77.github.io/SUSTech-BIOS201/about/"><span data-feather='user'></span> About </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/dbrg77/SUSTech-BIOS201"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Section 3: Population Structure Analysis</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            June 19, 2022
+        </p>
+
+        <ul class="post-tags">
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p>As mentioned in our first lecture, our genome is extremely conserved. People say that the difference between any two people is about 0.1% (<a href="https://www.genome.gov/dna-day/15-ways/human-genomic-variation"><strong>source</strong></a>). That is the number when we only talk about single nucleotide variations (SNVs). If we take insertion, deletion, inversion, translocation <em>etc.</em> into account, about 1.6% of our genome is different (<a href="http://book.bionumbers.org/how-genetically-similar-are-two-random-people/"><strong>source</strong></a>), which is also small. However, remember that our genome is huge: 3 billion ($3 \times 10^9$) base pairs for a haploid genome. Therefore, we can say that the difference among individuals is huge, which makes sense and follows our observation in real life. It is that small percentage of the genome that makes each of us unique.</p>
+<p>Did you know that the study of forensics is essentially using the information from those 1.6% of the genome to identify individuals from the crime scenes? The Federal Bureau of Investigation (FBI) are routinely using 13 locations <!-- raw HTML omitted --><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted --> in our genome to identify individuals in the United States, and Interpol is using 10 standard locations for the United Kingdom and Europe (<a href="https://www.nature.com/scitable/topicpage/forensics-dna-fingerprinting-and-codis-736/"><strong>source</strong></a>)<!-- raw HTML omitted --><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup><!-- raw HTML omitted -->. The point here is that genomic variants are important. That&rsquo;s why projects, like <a href="https://www.internationalgenome.org"><strong>the 1000 Genome Project</strong></a>, are trying to produce an catalog of genetic variants among different populations.</p>
+<p>In this course, we only focus on SNVs. They already tell us a lot about ourselves. Very often, those SNVs have different distributions among different populations. For example, check the SNV <code>rs3916235</code> from dbSNP. You will see they have completely different allele frequencies in East Asian, South Asian, European, African and American populations. Now some of you might wonder: how many SNVs do we need to discriminate those five populations? Or a simpler quesiton: whether the 214 loci you are testing during the course are enough to discriminate those five populations? Let&rsquo;s find out.</p>
+<p>The purpose here is to group each individual based on similarily of those SNVs, and visualise the overall structure. Here, we describe each invididual as 214 SNVs, so we have a high-dimension data: 214 dimensions (well &hellip; not exactly 214, see later section). We are not good at visualising and imagining data at &gt;3 dimensional space. A common pratice is to utilise a <a href="http://en.wikipedia.org/wiki/Dimensionality_reduction"><strong>Dimensionality Reduction</strong></a> technique to reduce the dimension of the data while still preserve some sort of structure. <a href="http://en.wikipedia.org/wiki/Principal_component_analysis"><strong>Principle component analysis</strong></a>, or PCA, is pretty much the go-to method when it comes to dimenionality reduction. I see many publications using PCA on the genotype data to show population structures, which seems to be a standard thing to do. However, it is not entirely clear to me how exactly the PCA is done. For example, PCA works on numerical data. How do you convert the categorical genotype data into numerical data? Here, I&rsquo;m documenting exactly how I&rsquo;m doing this to keep a record for myself. Again, all the analysis is done inside the <code>bios201</code> directory unless stated otherwise.</p>
+<h3 id="1-decide-on-the-method">1. Decide on the method</h3>
+<p>Let&rsquo;s start with the method of converting the genotype data to numerical data. I found the method section by <a href="https://www.nature.com/articles/s41598-021-97129-2"><strong>Padakanti</strong> <em><strong>et al.</strong></em></a> very informative. I quote from the method:</p>
+<blockquote>
+<p>We download the variant calling files (VCF) from the phase 3 data of the 1000 Genomes Project. We select the loci according to the following criteria: (1) they are located on autosomes, (2) they are biallelic among the subjects, (3) they have valid entries in more than 90% of the subjects. 30,761,503 loci meet those conditions. The resulting data is a 30,761,503 $\times$ 2504 matrix with phased, biallelic entries $(0|0,\ 0|1,\ 1|0,\ 1|1)$, where 0 and 1 denote major and minor alleles respectively. We further add the biallelic entries of each locus to form a genotype matrix $\boldsymbol{X}$ which take values in {$0,\ 1,\ 2$}. The genotype matrix is used in PCA, and the phased data is used in tract inference analysis.</p>
+</blockquote>
+<p>That looks very clear and makes sense. We don&rsquo;t really need all of those SNVs, just the 214 SNVs we are investigating in this course.</p>
+<h3 id="2-get-the-data-from-the-1000-genome-project">2. Get the data from the 1000 Genome Project</h3>
+<p>Now let&rsquo;s get some data from the 1000 Genome Project. Go to the <a href="http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/"><strong>IGSR FTP site</strong></a>, or the <a href="https://ftp-trace.ncbi.nih.gov/1000genomes/ftp/release/20130502"><strong>NCBI FTP counterpart</strong></a>. Here you will find the 2504 individuals in their phase 3 study. The meta data is in the <code>integrated_call_samples_v3.20130502.ALL.panel</code> file. You will also see <code>ALL.{chr}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz</code> files. Those are the VCF, one file per chromosome. The file sizes are big, and we only need the 214 SNVs we are interested in. In theory, we could directly extract those SNVs from the VCF file using <code>bcftools</code> or <code>tabix</code> without downloading them. However, my internet connection is not stable and we might need them in future, so I decide to download them to my local machine. I used the NCBI FTP since it is faster in my university. I organised all the url into a <a href="/data/1kg_phase3_release_20130502_vcf_url.txt"><strong>text file</strong></a>, and download the data using <code>wget</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget -c -P 1kg_phase3_release_20130502_vcf <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>     -i 1kg_phase3_release_20130502_vcf_url.txt
+</code></pre></div><p>I could extract those SNVs based on the locations, which should be very quick with <code>bcftools</code>. However, I get more accurate results if I just use the dbSNP ID. Therefore, I&rsquo;m doing this in a slower way:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#6272a4"># get the dbSNP IDs for the 214 SNVs which are basically the fasta header</span>
+grep <span style="color:#f1fa8c">&#39;&gt;&#39;</span> MGI358.SNP.fa | cut -c 2- &gt; MGI358.SNP.id.txt
+
+<span style="color:#6272a4"># print the recordes in the VCF from the 1000 Genome Project that has the dbSNP IDs of our interest</span>
+zcat 1kg_phase3_release_20130502_vcf/*.gz | grep -w -f MGI358.SNP.id.txt &gt; tmp
+
+<span style="color:#6272a4"># add the VCF header to the output</span>
+cat &lt;<span style="color:#ff79c6">(</span>zcat 1kg_phase3_release_20130502_vcf/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz | head -n <span style="color:#bd93f9">253</span> | tail -n 1<span style="color:#ff79c6">)</span> tmp &gt; MGI358_in_1kg.tsv
+
+<span style="color:#6272a4"># remove intermediate file</span>
+rm tmp
+</code></pre></div><p>Now we could convert the genotypes of each invidual from the <code>MGI358_in_1kg.tsv</code> file into a matrix by simply doing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python output_1kg_gt_matrix.py &gt; 1kg_genotype_matrix.tsv
+</code></pre></div><p>Here is the content of <code>output_1kg_gt_matrix.py</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">with</span> <span style="color:#8be9fd;font-style:italic">open</span>(<span style="color:#f1fa8c">&#39;MGI358_in_1kg.tsv&#39;</span>) <span style="color:#ff79c6">as</span> fh:
+    header <span style="color:#ff79c6">=</span> fh<span style="color:#ff79c6">.</span>readline()<span style="color:#ff79c6">.</span>strip()<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span>)
+    <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#39;</span> <span style="color:#ff79c6">%</span> (header[<span style="color:#bd93f9">2</span>], <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span><span style="color:#ff79c6">.</span>join(header[<span style="color:#bd93f9">9</span>:])))
+    <span style="color:#ff79c6">for</span> line <span style="color:#ff79c6">in</span> fh:
+        rec <span style="color:#ff79c6">=</span> line<span style="color:#ff79c6">.</span>strip()<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span>)
+        num <span style="color:#ff79c6">=</span> []
+        <span style="color:#ff79c6">for</span> gt <span style="color:#ff79c6">in</span> rec[<span style="color:#bd93f9">9</span>:]:
+            a1, a2 <span style="color:#ff79c6">=</span> gt<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;|&#39;</span>)
+            num<span style="color:#ff79c6">.</span>append(<span style="color:#8be9fd;font-style:italic">str</span>(<span style="color:#8be9fd;font-style:italic">int</span>(a1) <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">int</span>(a2)))
+        <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#39;</span> <span style="color:#ff79c6">%</span> (rec[<span style="color:#bd93f9">2</span>], <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span><span style="color:#ff79c6">.</span>join(num)))
+</code></pre></div><h3 id="3-perform-pca">3. Perform PCA</h3>
+<p>It turns out that 199 out of 214 SNVs from the <code>MGI358.SNP.fa</code> are in the 2504 individuals. Therefore, the <code>1kg_genotype_matrix.tsv</code> file is a 199 $\times$ 2504 matrix. Once we have this file, we are finally ready to perform PCA using the SNVs in this course to see if they can discriminate different populations.</p>
+<p>Like always, we need some tools for that purpose. In this case, we need specific python packages, including <code>numpy</code>, <code>pandas</code> and <code>scikit-learn</code>. We also need <code>matplotlib</code> and <code>seaborn</code> for the plotting. In addition, we want to use <code>jupyterlab</code> to document the code and output for the purpose of reproducibility. In this case, the exact version does not really matter, so you can just install them by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">conda install numpy pandas scikit-learn matplotlib seaborn
+</code></pre></div><p>Once the packages are installed, you start with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">jupyter lab
+</code></pre></div><p>Then a window from your browser should be open. If not, check the output from your terminal, you can simply put the url there into your web browser. The url should look like this <code>http://localhost:8888/lab?token=59d7953433af9676733290895a80bc38c9babc2a3a985969</code>. Then, you can create a Python3 notebook and start coding.</p>
+<p>First, import the necessary packages:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">%</span>matplotlib inline
+<span style="color:#ff79c6">%</span>config InlineBackend<span style="color:#ff79c6">.</span>figure_format <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;retina&#39;</span>
+
+<span style="color:#ff79c6">import</span> pandas <span style="color:#ff79c6">as</span> pd
+<span style="color:#ff79c6">import</span> seaborn <span style="color:#ff79c6">as</span> sns
+<span style="color:#ff79c6">import</span> matplotlib <span style="color:#ff79c6">as</span> mpl
+<span style="color:#ff79c6">import</span> matplotlib.pyplot <span style="color:#ff79c6">as</span> plt
+<span style="color:#ff79c6">from</span> sklearn.decomposition <span style="color:#ff79c6">import</span> PCA
+</code></pre></div><p>In addition, I like my plot in a speicif way, so I set them as (you don&rsquo;t have to do this):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39;axes.titlesize&#39;</span>] <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">19</span>
+mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39;axes.labelsize&#39;</span>] <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">16</span>
+mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39;legend.fontsize&#39;</span>] <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">13</span>
+mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39;legend.markerscale&#39;</span>] <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>
+mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39;xtick.labelsize&#39;</span>] <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">14</span>
+mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39;ytick.labelsize&#39;</span>] <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">14</span>
+mpl<span style="color:#ff79c6">.</span>rcParams[<span style="color:#f1fa8c">&#39;figure.dpi&#39;</span>] <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">100</span>
+</code></pre></div><p>Now we load the genotype data (<code>1kg_genotype_matrix.tsv</code>) and the meta data (<code>integrated_call_samples_v3.20130502.ALL.panel</code>). We also need to make sure the samples, <em>i.e.</em> individuals, appear in the same order in both data:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sample_genotype <span style="color:#ff79c6">=</span> pd<span style="color:#ff79c6">.</span>read_csv(<span style="color:#f1fa8c">&#39;1kg_genotype_matrix.tsv&#39;</span>, sep <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span>, index_col <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>)
+sample_info <span style="color:#ff79c6">=</span> pd<span style="color:#ff79c6">.</span>read_csv(<span style="color:#f1fa8c">&#39;1kg_phase3_release_20130502_vcf/integrated_call_samples_v3.20130502.ALL.panel&#39;</span>,
+                          sep <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#39;</span>, index_col <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>, usecols<span style="color:#ff79c6">=</span>[<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">1</span>,<span style="color:#bd93f9">2</span>,<span style="color:#bd93f9">3</span>])
+sample_info <span style="color:#ff79c6">=</span> sample_info<span style="color:#ff79c6">.</span>loc[sample_genotype<span style="color:#ff79c6">.</span>columns, :]
+</code></pre></div><p>We could perform PCA using the <code>scikit-learn</code> package. The good thing about the models in <code>scikit-learn</code> is that they all pretty much have the same &ldquo;grammar&rdquo; to use. You always create an instance of your model. Then you use the methods associated with the instance to do certain things. Very often, it is <code>.fit</code> to let the model to learn the data, then <code>.transform</code> to apply dimensionality reduction.</p>
+<p>In terms of PCA, this is how it is done:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pca <span style="color:#ff79c6">=</span> PCA(n_components<span style="color:#ff79c6">=</span><span style="color:#bd93f9">2</span>)              <span style="color:#6272a4"># create the instance</span>
+pca<span style="color:#ff79c6">.</span>fit(sample_genotype<span style="color:#ff79c6">.</span>T)             <span style="color:#6272a4"># fit the modle</span>
+X_r <span style="color:#ff79c6">=</span> pca<span style="color:#ff79c6">.</span>transform(sample_genotype<span style="color:#ff79c6">.</span>T) <span style="color:#6272a4"># apply dimensionality reduction</span>
+sample_info[<span style="color:#f1fa8c">&#39;PC1&#39;</span>] <span style="color:#ff79c6">=</span> X_r[:, <span style="color:#bd93f9">0</span>]
+sample_info[<span style="color:#f1fa8c">&#39;PC2&#39;</span>] <span style="color:#ff79c6">=</span> X_r[:, <span style="color:#bd93f9">1</span>]
+</code></pre></div><p>Now we could make the visualisation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, axs <span style="color:#ff79c6">=</span> plt<span style="color:#ff79c6">.</span>subplots(figsize <span style="color:#ff79c6">=</span> (<span style="color:#bd93f9">14</span>,<span style="color:#bd93f9">7</span>), ncols<span style="color:#ff79c6">=</span><span style="color:#bd93f9">2</span>, sharex<span style="color:#ff79c6">=</span><span style="color:#ff79c6">True</span>, sharey<span style="color:#ff79c6">=</span><span style="color:#ff79c6">True</span>)
+
+sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> sample_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;super_pop&#39;</span>,
+                edgecolor <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">None</span>, palette <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Set1&#39;</span>, s <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>, ax <span style="color:#ff79c6">=</span> axs[<span style="color:#bd93f9">0</span>])
+sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> sample_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;gender&#39;</span>,
+                edgecolor <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">None</span>, palette <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Set1&#39;</span>, s <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>, ax <span style="color:#ff79c6">=</span> axs[<span style="color:#bd93f9">1</span>])
+
+<span style="color:#ff79c6">for</span> ax <span style="color:#ff79c6">in</span> axs:
+    ax<span style="color:#ff79c6">.</span>spines[<span style="color:#f1fa8c">&#39;top&#39;</span>]<span style="color:#ff79c6">.</span>set_visible(<span style="color:#ff79c6">False</span>)
+    ax<span style="color:#ff79c6">.</span>spines[<span style="color:#f1fa8c">&#39;right&#39;</span>]<span style="color:#ff79c6">.</span>set_visible(<span style="color:#ff79c6">False</span>)
+    ax<span style="color:#ff79c6">.</span>legend(title<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;&#39;</span>, frameon <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">False</span>)
+
+plt<span style="color:#ff79c6">.</span>savefig(<span style="color:#f1fa8c">&#39;PCA_by_superpop_gender.pdf&#39;</span>, bbox_inches <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;tight&#39;</span>)
+</code></pre></div><p><img src="/data/PCA_by_superpop_gender.pdf" alt=""></p>
+<h3 id="pratice">Pratice</h3>
+<ul>
+<li>Describe the results</li>
+<li>What can you say from the PCA results</li>
+</ul>
+<p>The good thing about PCA is that we could inestigate what causes the patterns on each PC. It seems PC1 separates African from non-African populations. Now let&rsquo;s look at what features contribute to this separations:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#6272a4"># first we sort the loading of each feature</span>
+pca<span style="color:#ff79c6">.</span>components_[<span style="color:#bd93f9">0</span>, :]<span style="color:#ff79c6">.</span>argsort()
+
+<span style="color:#6272a4"># the above result indicates that the 67th feature contributes the most to the negative side (non-AFR)</span>
+<span style="color:#6272a4"># the 78th feature contributes the most to the positive side (AFR)</span>
+<span style="color:#8be9fd;font-style:italic">print</span>(sample_genotype<span style="color:#ff79c6">.</span>index[<span style="color:#bd93f9">67</span>])
+<span style="color:#8be9fd;font-style:italic">print</span>(sample_genotype<span style="color:#ff79c6">.</span>index[<span style="color:#bd93f9">78</span>])
+</code></pre></div><p>We get <code>rs3916235</code> and <code>rs2814778</code>. We could look at their values in each individual:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sample_info[<span style="color:#f1fa8c">&#39;rs3916235&#39;</span>] <span style="color:#ff79c6">=</span> sample_genotype<span style="color:#ff79c6">.</span>loc[<span style="color:#f1fa8c">&#39;rs3916235&#39;</span>,]<span style="color:#ff79c6">.</span>astype(<span style="color:#8be9fd;font-style:italic">str</span>)
+sample_info[<span style="color:#f1fa8c">&#39;rs2814778&#39;</span>] <span style="color:#ff79c6">=</span> sample_genotype<span style="color:#ff79c6">.</span>loc[<span style="color:#f1fa8c">&#39;rs2814778&#39;</span>,]<span style="color:#ff79c6">.</span>astype(<span style="color:#8be9fd;font-style:italic">str</span>)
+
+fig, axs <span style="color:#ff79c6">=</span> plt<span style="color:#ff79c6">.</span>subplots(figsize <span style="color:#ff79c6">=</span> (<span style="color:#bd93f9">14</span>,<span style="color:#bd93f9">7</span>), ncols<span style="color:#ff79c6">=</span><span style="color:#bd93f9">2</span>, sharex<span style="color:#ff79c6">=</span><span style="color:#ff79c6">True</span>, sharey<span style="color:#ff79c6">=</span><span style="color:#ff79c6">True</span>)
+
+sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> sample_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;rs3916235&#39;</span>,
+                edgecolor <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">None</span>, palette <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Set1&#39;</span>, s <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>, ax <span style="color:#ff79c6">=</span> axs[<span style="color:#bd93f9">0</span>])
+sns<span style="color:#ff79c6">.</span>scatterplot(data <span style="color:#ff79c6">=</span> sample_info, x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC1&#39;</span>, y <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;PC2&#39;</span>, hue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;rs2814778&#39;</span>,
+                edgecolor <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">None</span>, palette <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Set2&#39;</span>, s <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>, ax <span style="color:#ff79c6">=</span> axs[<span style="color:#bd93f9">1</span>])
+
+<span style="color:#ff79c6">for</span> ax <span style="color:#ff79c6">in</span> axs:
+    ax<span style="color:#ff79c6">.</span>spines[<span style="color:#f1fa8c">&#39;top&#39;</span>]<span style="color:#ff79c6">.</span>set_visible(<span style="color:#ff79c6">False</span>)
+    ax<span style="color:#ff79c6">.</span>spines[<span style="color:#f1fa8c">&#39;right&#39;</span>]<span style="color:#ff79c6">.</span>set_visible(<span style="color:#ff79c6">False</span>)
+    ax<span style="color:#ff79c6">.</span>legend(title<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;&#39;</span>, frameon <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">False</span>)
+
+axs[<span style="color:#bd93f9">0</span>]<span style="color:#ff79c6">.</span>set_title(<span style="color:#f1fa8c">&#39;rs3916235&#39;</span>)
+axs[<span style="color:#bd93f9">1</span>]<span style="color:#ff79c6">.</span>set_title(<span style="color:#f1fa8c">&#39;rs2814778&#39;</span>)
+    
+plt<span style="color:#ff79c6">.</span>savefig(<span style="color:#f1fa8c">&#39;PCA_by_SNVs.pdf&#39;</span>, bbox_inches <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;tight&#39;</span>)
+</code></pre></div><p><img src="/data/PCA_by_SNVs.pdf" alt=""></p>
+<h3 id="practice">Practice</h3>
+<ul>
+<li>Check those two SNVs in dbSNP to see what they are</li>
+<li>Can you do similar things on PC2</li>
+</ul>
+<p>All the above codes and plots can be found in this <a href="/data/1kg_genotype_analysis.ipynb"><strong>notebook</strong></a>. You can download it and run by yourself. Or you could have a look at <a href="/data/1kg_genotype_analysis.html"><strong>an HTML verion</strong></a> of it. They also contain a bit more stuff where we use differnt models to predict the super population of new data.</p>
+<p>I hope this is helpful.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Note that these 13 locations are not SNVs. They are called <a href="https://www.genome.gov/genetics-glossary/Tandem-Repeat"><strong>short tandem repeats (STR)</strong></a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Check this perspective: <a href="https://www.nature.com/scitable/content/Legal-and-public-policy-issues-in-DNA-13116/"><strong>Legal and public policy issues in DNA forensics</strong></a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+        </p>
+    </div>
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    <span>&copy; 2022 SUSTech BIOS201</span>
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/526avijitgupta/gokarna">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>

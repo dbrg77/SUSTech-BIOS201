@@ -6,14 +6,42 @@
     <description>Recent content in Posts on BIOS201 Searching The Logic of Life</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Thu, 16 Jun 2022 10:07:27 +0800</lastBuildDate><atom:link href="https://dbrg77.github.io/SUSTech-BIOS201/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 19 Jun 2022 10:07:27 +0800</lastBuildDate><atom:link href="https://dbrg77.github.io/SUSTech-BIOS201/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Section 3: Population Structure Analysis</title>
+      <link>https://dbrg77.github.io/SUSTech-BIOS201/posts/population-structure-analysis-using-pca/</link>
+      <pubDate>Sun, 19 Jun 2022 10:07:27 +0800</pubDate>
+      
+      <guid>https://dbrg77.github.io/SUSTech-BIOS201/posts/population-structure-analysis-using-pca/</guid>
+      <description>As mentioned in our first lecture, our genome is extremely conserved. People say that the difference between any two people is about 0.1% (source). That is the number when we only talk about single nucleotide variations (SNVs). If we take insertion, deletion, inversion, translocation etc. into account, about 1.6% of our genome is different (source), which is also small. However, remember that our genome is huge: 3 billion ($3 \times 10^9$) base pairs for a haploid genome.</description>
+    </item>
+    
+    <item>
+      <title>Section 2: Sequencing Data Analysis</title>
+      <link>https://dbrg77.github.io/SUSTech-BIOS201/posts/sequencing-data-analysis/</link>
+      <pubDate>Sat, 18 Jun 2022 10:07:27 +0800</pubDate>
+      
+      <guid>https://dbrg77.github.io/SUSTech-BIOS201/posts/sequencing-data-analysis/</guid>
+      <description>Now that you have the sequencing data of yourself, let&amp;rsquo;s identify the variants in your genome compared to the reference genome. In this section, we will only focus on single nucleotide variations (SNVs). Once we did that, we could look up in the public databases and literatures to see if the variants have any effect.
+2.1 Computing environment setup The first step of doing anything is always to set up our computing environment, which involes in installing the software tools we need for our purposes.</description>
+    </item>
+    
+    <item>
+      <title>Section 1: Unix Boot Camp</title>
+      <link>https://dbrg77.github.io/SUSTech-BIOS201/posts/unix-boot-camp/</link>
+      <pubDate>Fri, 17 Jun 2022 10:07:27 +0800</pubDate>
+      
+      <guid>https://dbrg77.github.io/SUSTech-BIOS201/posts/unix-boot-camp/</guid>
+      <description>Unix operating systems are absolutely required when it comes to the bioinformatics analysis. We will introduce some basic skills so that you will be prepared for the analysis of your own sequencing data. The content of this section is very similar to Part 1 from Unix &amp;amp; Perl Primer for Biologists. You can think of this section as the Part 1 of that book condensed to a whole morning session. In terms of unix introduction, that is the best tutorial I have ever seen.</description>
+    </item>
+    
     <item>
       <title>Welcome To BIOS201</title>
       <link>https://dbrg77.github.io/SUSTech-BIOS201/posts/welcome-to-bios201/</link>
       <pubDate>Thu, 16 Jun 2022 10:07:27 +0800</pubDate>
       
       <guid>https://dbrg77.github.io/SUSTech-BIOS201/posts/welcome-to-bios201/</guid>
-      <description>Welcome to BIOS201. To be updated &amp;hellip;</description>
+      <description>BIOS201 is offered by the School of Life Sciences at SUSTech, Shenzhen. This is in collaboration with BGI-Shenzhen. In this course, you will perform targeted sequencing of 214 locations of your own genome and find out if there are any differences between your DNA and the reference genome. More importantly, you will find out how to assess if those differences can affect certain aspects of yourself. Basically, you will learn the following topics:</description>
     </item>
     
   </channel>
