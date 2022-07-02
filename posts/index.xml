@@ -13,7 +13,7 @@
       <pubDate>Sun, 19 Jun 2022 10:07:27 +0800</pubDate>
       
       <guid>https://dbrg77.github.io/SUSTech-BIOS201/posts/population-structure-analysis-using-pca/</guid>
-      <description>As mentioned in our first lecture, our genome is extremely conserved. People say that the difference between any two people is about 0.1% (source). That is the number when we only talk about single nucleotide variations (SNVs). If we take insertion, deletion, inversion, translocation etc. into account, about 1.6% of our genome is different (source), which is also small. However, remember that our genome is huge: 3 billion ($3 \times 10^9$) base pairs for a haploid genome.</description>
+      <description>As mentioned in our first lecture, our genome is extremely conserved. People say that the difference between any two people is about 0.1% (source). That is the number when we only talk about single nucleotide polymorphisms (SNPs). If we take insertion, deletion, inversion, translocation etc. into account, about 1.6% of our genome is different (source), which is also small. However, remember that our genome is huge: 3 billion ($3 \times 10^9$) base pairs for a haploid genome.</description>
     </item>
     
     <item>
@@ -22,7 +22,7 @@
       <pubDate>Sat, 18 Jun 2022 10:07:27 +0800</pubDate>
       
       <guid>https://dbrg77.github.io/SUSTech-BIOS201/posts/sequencing-data-analysis/</guid>
-      <description>Now that you have the sequencing data of yourself, let&amp;rsquo;s identify the variants in your genome compared to the reference genome. In this section, we will only focus on single nucleotide variations (SNVs). Once we did that, we could look up in the public databases and literatures to see if the variants have any effect.
+      <description>Now that you have the sequencing data of yourself, let&amp;rsquo;s identify the variants in your genome compared to the reference genome. In this section, we will only focus on single nucleotide polymorphisms (SNPs). Once we did that, we could look up in the public databases and literatures to see if the variants have any effect.
 2.1 Computing environment setup The first step of doing anything is always to set up our computing environment, which involes in installing the software tools we need for our purposes.</description>
     </item>
     

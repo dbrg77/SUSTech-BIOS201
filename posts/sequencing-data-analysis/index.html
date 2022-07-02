@@ -161,7 +161,7 @@
 
     <div class="post-content">
         <p>
-            <p>Now that you have the sequencing data of yourself, let&rsquo;s identify the variants in your genome compared to the reference genome. In this section, we will only focus on single nucleotide variations (SNVs). Once we did that, we could look up in the public databases and literatures to see if the variants have any effect.</p>
+            <p>Now that you have the sequencing data of yourself, let&rsquo;s identify the variants in your genome compared to the reference genome. In this section, we will only focus on single nucleotide polymorphisms (SNPs). Once we did that, we could look up in the public databases and literatures to see if the variants have any effect.</p>
 <h2 id="21-computing-environment-setup">2.1 Computing environment setup</h2>
 <p>The first step of doing anything is always to set up our computing environment, which involes in installing the software tools we need for our purposes. There are quite a few tools that can do what we want. Here, we just choose the following ones:</p>
 <ul>
@@ -219,7 +219,7 @@ bwa mem -M -Y -t <span style="color:#bd93f9">2</span> MGI358.SNP.fa HG00303_EUR.
 
 <span style="color:#6272a4"># index the bam file</span>
 samtools index HG00303_EUR_to_MGI_sorted.bam
-</code></pre></div><p>Finally, we could identify SNVs between your DNA and the reference using bcftools:</p>
+</code></pre></div><p>Finally, we could identify SNPs between your DNA and the reference using bcftools:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bcftools mpileup -f MGI358.SNP.fa HG00303_EUR_to_MGI_sorted.bam | <span style="color:#f1fa8c">\
 </span><span style="color:#f1fa8c"></span>    bcftools call -mv - &gt; HG00303_EUR_to_MGI_all.vcf
 </code></pre></div><p>The output is in a Variant Call Format (VCF). You can check the specification by <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf"><strong>clicking here</strong></a>. Your output file should look like this (I omitted a lot of header lines here):</p>
@@ -243,7 +243,7 @@ rs1490413       1024    .       G       A       225.417 .       DP=253;VDB=0;SGB
 <li>Examine the first 2 records in your VCF file in the <a href="https://www.ncbi.nlm.nih.gov/snp/"><strong>dbSNP</strong></a> database.</li>
 </ul>
 <h2 id="23-whole-genome-sequencing-wgs">2.3 Whole Genome Sequencing (WGS)</h2>
-<p>Another common scenario is that you are doing this type of experiment in a &ldquo;<em>de novo</em>&rdquo; way. You sequence your whole genome, try to identify all the SNVs in the genome and investigate if they have any effects. Now let&rsquo;s perform the analysis in this scenario.</p>
+<p>Another common scenario is that you are doing this type of experiment in a &ldquo;<em>de novo</em>&rdquo; way. You sequence your whole genome, try to identify all the SNPs in the genome and investigate if they have any effects. Now let&rsquo;s perform the analysis in this scenario.</p>
 <p>In order to do this, we need the reference sequence of the entire human genome. You can downlaod the <code>fasta</code> file from the <a href="https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/"><strong>UCSC Genome Browser</strong></a>, but the file size is very big and the interenet speed at our university is slow. I already prepared them for you. You can download the <a href="http://10.20.42.238:1234/folders/sf_html/BIOS201/GRCh38.tar.gz"><strong>GRCh38.tar.gz</strong></a> file (file size: 4.1 GB) located on my workstation (campus access only) to your <code>bios201</code> directory. Extract the file by simply typing <code>tar zxvf GRCh38.tar.gz</code>. Once it is done, you will get a directory called <code>GRCh38</code> and inside it, there are seven files (a total of 8 GB):</p>
 <pre tabindex="0"><code>GRCh38.fa
 GRCh38.fa.amb
@@ -301,7 +301,7 @@ bcftools mpileup -f GRCh38/GRCh38.fa HG00303_EUR_to_GRCh38_sorted.bam | <span st
 #CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  HG00303_EUR_to_GRCh38_sorted.bam
 chr1    76344917        .       A       C       74      .       DP=3;VDB=0.431015;SGB=-0.511536;MQSB=1;MQ0F=0;AC=2;AN=2;DP4=0,0,2,1;MQ=60       GT:PL   1/1:104,9,0
 chr1    196145102       .       G       A       132     .       DP=6;VDB=0.0602347;SGB=-0.590765;MQSB=1;MQ0F=0;AC=2;AN=2;DP4=0,0,4,1;MQ=60      GT:PL   1/1:162,15,0
-</code></pre><p>The content in the current VCF file is slightly different from the previous one. The first column is now the chromosome names. The second column indicates the position of the SNV. Those are useful and important pieces of information. However, do the variants have any effect on our phenotypes? Do we know anything about them? In order to figue out that, we need to compare the variants to a database containing many SNPs that we know about. If the variant in your genome is present in the database, it is relative easy to find out what it does based on literatures.</p>
+</code></pre><p>The content in the current VCF file is slightly different from the previous one. The first column is now the chromosome names. The second column indicates the position of the SNP. Those are useful and important pieces of information. However, do the variants have any effect on our phenotypes? Do we know anything about them? In order to figue out that, we need to compare the variants to a database containing many SNPs that we know about. If the variant in your genome is present in the database, it is relative easy to find out what it does based on literatures.</p>
 <p>You probably noticed that the values in the third column of the current VCF file are all <code>.</code>. Now let&rsquo;s annotate the variant with the <code>rsXXXX</code> ID in the dbSNP database. First, we need the variants in the database in the VCF format. Go to the <a href="https://www.ncbi.nlm.nih.gov/snp/"><strong>dbSNP database</strong></a>, then click the <code>FTP Download</code> at the right hand side. Go all the way to the <code>organisms -&gt; human_9606_b151_GRCh38p7 -&gt; VCF</code> directory, and the <code>00-All.vcf.gz</code> file is what you need. However, it is really big, and I have prepared a subset that is enough for us to use in this section. You can download the truncated version (<a href="https://dbrg77.github.io/SUSTech-BIOS201/data/dbSNP_subset_formatted.vcf"><strong>dbSNP_subset_formatted.vcf</strong></a>) to your own compouter and put it under the <code>bios201</code> directory.</p>
 <p>Before we could perform the annotation, we need to compress and index the VCF files using <code>bgzip</code> and <code>tabix</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#6272a4"># compress with bgzip</span>
@@ -320,14 +320,14 @@ tabix -s <span style="color:#bd93f9">1</span> -b <span style="color:#bd93f9">2</
 <p>Now look inside your annoated VCF file, do you notice something different? You probably see that the third column of a lot of the records is replaced by the <code>rsXXXX</code> ID, while some of them still remain as <code>.</code>, which means it does not match any record in the dbSNP database. There are many reasons for this, and you can think about this by yourself.</p>
 <h3 id="practice-1">Practice</h3>
 <ul>
-<li>Find the SNV <code>rs1821380</code> in your annotated VCF file, can you find it or not? If yes, what does the record tell you? If not, can you think of possible reasons?</li>
+<li>Find the SNP <code>rs1821380</code> in your annotated VCF file, can you find it or not? If yes, what does the record tell you? If not, can you think of possible reasons?</li>
 <li>Look it up in the dbSNP database to see if we know anything about this variant</li>
 <li>What are the frequencies of the reference and alternative alleles, respectively</li>
 </ul>
 <h2 id="24-visualisation-of-the-read-alignment">2.4 Visualisation of the read alignment</h2>
 <p>Very often, the most efficient way of getting a sense of your data is the least scientific way, that is, looking at it by eyes. To visualise our sequencing reads in the genome, you can use <a href="https://igv.org"><strong>IGV: Integrative Genomics Viewer</strong></a>. Go to the <a href="https://software.broadinstitute.org/software/igv/download"><strong>Download page</strong></a> and get the program (with Java included) for your system. Lauch the program and load the <code>bam</code> file generated in the previous step. As long as the bam index (the <code>bai</code> file) is located in the same directory of your <code>bam</code> file, it should be loaded without any problem.</p>
 <h3 id="practice-2">Practice</h3>
-<p>Look at the alignments around the following SNVs and see if your DNA is different from the reference genome:</p>
+<p>Look at the alignments around the following SNPs and see if your DNA is different from the reference genome:</p>
 <ul>
 <li>rs1821380 (chr15:39021201)</li>
 <li>rs1800414 (chr15:27951891)</li>
