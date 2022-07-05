@@ -215,7 +215,7 @@ samtools index HG00303_EUR_to_MGI_sorted.bam
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#6272a4"># align, filter, convert and sort</span>
 bwa mem -M -Y -t <span style="color:#bd93f9">2</span> MGI358.SNP.fa HG00303_EUR.fastq.gz | <span style="color:#f1fa8c">\
 </span><span style="color:#f1fa8c"></span>    samtools view -SuF <span style="color:#bd93f9">3844</span> - | <span style="color:#f1fa8c">\
-</span><span style="color:#f1fa8c"></span>    samtools sort - -T -o HG00303_EUR_to_MGI_sorted.bam
+</span><span style="color:#f1fa8c"></span>    samtools sort - -T tmp -o HG00303_EUR_to_MGI_sorted.bam
 
 <span style="color:#6272a4"># index the bam file</span>
 samtools index HG00303_EUR_to_MGI_sorted.bam
