@@ -357,7 +357,7 @@ table td {
 }
 
 /* HOME PAGE */
-.home-about {
+.home-about, .home-content {
   text-align: center;
 }
 
@@ -428,7 +428,7 @@ table td {
   font-size: 1.1em;
   font-style: italic;
 }
-.post .post-date {
+.post .post-date, .prev-post-date, .next-post-date {
   color: gray;
 }
 .post .post-content {
@@ -478,7 +478,11 @@ table td {
   display: inline-block;
 }
 .post-title .post-link {
-  width: 80%;
+  /* This magic number is the largest width that keeps the post-date div from
+   *  causing the line to wrap with the longest possible date string
+   *  "September 22, 2022"
+   */
+  width: 73%;
 }
 .tags-list .post-tags {
   margin-top: 50px;
@@ -556,7 +560,7 @@ table td {
     width: 100%;
   }
 
-  .home-about {
+  .home-about, .home-content {
     margin: 0 auto;
   }
 
@@ -577,4 +581,28 @@ table td {
   .nav-hamburger-list {
     visibility: hidden !important;
   }
+}
+
+/*Accessibility*/
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.prev-post {
+  float: left;
+  text-align: left;
+}
+
+.next-post {
+  float: right;
+  text-align: right;
+}
+
+.prev-post, .next-post {
+  max-width: 33%;
 }
