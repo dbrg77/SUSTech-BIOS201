@@ -172,16 +172,16 @@
 <li><a href="https://www.htslib.org"><strong>samtools, bcftools and tabix</strong></a></li>
 </ul>
 <p>During the lecture, we talked about using the following sequence of actions to install softwares:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./configure    <span style="color:#586e75"># collect necessary information from your machine</span>
-</span></span><span style="display:flex;"><span>make           <span style="color:#586e75"># compile the source code to binary machine code</span>
-</span></span><span style="display:flex;"><span>make install   <span style="color:#586e75"># copy the programs to your $PATH</span>
+<div class="highlight"><pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./configure    <span style="color:#7f848e"># collect necessary information from your machine</span>
+</span></span><span style="display:flex;"><span>make           <span style="color:#7f848e"># compile the source code to binary machine code</span>
+</span></span><span style="display:flex;"><span>make install   <span style="color:#7f848e"># copy the programs to your $PATH</span>
 </span></span></code></pre></div><p>However, this can be very difficult for beginners. Therefore, we are going to use an easier route, that is, using a package management system. <a href="https://docs.conda.io/en/latest/"><strong>Conda</strong></a> is one of the most popular package management systems and environment management systems across different platforms, such as Windows, MacOS and Linux. In this course, we are using a minimal and light version of it: <a href="https://docs.conda.io/en/latest/miniconda.html"><strong>Miniconda</strong></a>. Go to the <a href="https://docs.conda.io/en/latest/miniconda.html"><strong>download page</strong></a> and get the installer for your system. If you are a Windows user, it is better to get the <a href="https://docs.microsoft.com/en-us/windows/wsl/install"><strong>Windows Subsystem for Linux (WSL)</strong></a> and install the Linux version of Miniconda uder the WSL. If you are a Mac user, it is better to install the command line tools by typing <code>xcode-select --install</code> in your terminal, and then download the bash version of the miniconda installer.</p>
 <p>Then, you can simply install Miniconda by (using the Linux installer as an example):</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bash Miniconda3-latest-Linux-x86_64.sh
+<div class="highlight"><pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bash Miniconda3-latest-Linux-x86_64.sh
 </span></span></code></pre></div><p>Just accept the default settings, and you should not have any problems with the installation. Once that is done, we can create an <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html"><strong>environment</strong></a> by simply typing <code>conda create -n BIOS201</code> in your terminal. Then, we could activate the environment by <code>conda activate BIOS201</code>. If this is successful, you should see the string <code>(BIOS201)</code> in front of your prompt, like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#719e07">(</span>BIOS201<span style="color:#719e07">)</span> xichen@DESKTOP-QAKDLCA:~$
+<div class="highlight"><pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#56b6c2">(</span>BIOS201<span style="color:#56b6c2">)</span> xichen@DESKTOP-QAKDLCA:~$
 </span></span></code></pre></div><p>Now, install the tools we need by simply type the following in the terminal:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>conda install -c bioconda bwa samtools bcftools tabix
+<div class="highlight"><pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>conda install -c bioconda bwa samtools bcftools tabix
 </span></span></code></pre></div><p>Those tools, together with some commonly used commands in Linux, are all we need for this section.</p>
 <h2 id="22-read-alignment-and-variant-calling">2.2 Read alignment and variant calling</h2>
 <p>Once the required softwares are installed, you are ready to align your reads to the reference genome. First, create a directory called <code>bios201</code> by typing <code>mkdir bios201</code>. You can do everything inside that directory. Then, get the reference <code>fasta</code> file <a href="https://dbrg77.github.io/SUSTech-BIOS201/data/MGI358.SNP.fa.zip"><strong>MGI358.SNP.fa.zip</strong></a> (password protected due to administrative reasons), and put it in your directory. Unzip it by <code>unzip MGI358.SNP.fa.zip</code>. Then, build the index of the reference by typing the following command, which is required for the read alignment step later:</p>
@@ -203,28 +203,28 @@
 <li><a href="https://dbrg77.github.io/SUSTech-BIOS201/data/HG03383_AFR.fastq.gz"><strong>HG03383_AFR.fastq.gz</strong></a></li>
 </ul>
 <p>Those data are truncated to just contain a few thousand reads around the locations we are intested in. It is small so that your laptop can handle them without any problems. I will use <code>HG00303_EUR.fastq.gz</code> for the demonstration. Align the reads using the following steps:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#586e75"># align the reads to the reference</span>
-</span></span><span style="display:flex;"><span>bwa mem -M -Y -t <span style="color:#2aa198">2</span> MGI358.SNP.fa HG00303_EUR.fastq.gz &gt; HG00303_EUR_to_MGI.sam
+<div class="highlight"><pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#7f848e"># align the reads to the reference</span>
+</span></span><span style="display:flex;"><span>bwa mem -M -Y -t <span style="color:#d19a66">2</span> MGI358.SNP.fa HG00303_EUR.fastq.gz &gt; HG00303_EUR_to_MGI.sam
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75"># filter and convert sam to bam</span>
-</span></span><span style="display:flex;"><span>samtools view -SbF <span style="color:#2aa198">3844</span> HG00303_EUR_to_MGI.sam &gt; HG00303_EUR_to_MGI.bam
+</span></span><span style="display:flex;"><span><span style="color:#7f848e"># filter and convert sam to bam</span>
+</span></span><span style="display:flex;"><span>samtools view -SbF <span style="color:#d19a66">3844</span> HG00303_EUR_to_MGI.sam &gt; HG00303_EUR_to_MGI.bam
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75"># sort the bam file</span>
+</span></span><span style="display:flex;"><span><span style="color:#7f848e"># sort the bam file</span>
 </span></span><span style="display:flex;"><span>samtools sort HG00303_EUR_to_MGI.bam -T tmp -o HG00303_EUR_to_MGI_sorted.bam
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75"># index the bam file</span>
+</span></span><span style="display:flex;"><span><span style="color:#7f848e"># index the bam file</span>
 </span></span><span style="display:flex;"><span>samtools index HG00303_EUR_to_MGI_sorted.bam
 </span></span></code></pre></div><p>If you are familiar with Unix command lines, those steps can be &ldquo;piped&rdquo; together and done in fewer lines of code without creating those intermediate files:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#586e75"># align, filter, convert and sort</span>
-</span></span><span style="display:flex;"><span>bwa mem -M -Y -t <span style="color:#2aa198">2</span> MGI358.SNP.fa HG00303_EUR.fastq.gz | <span style="color:#cb4b16">\
-</span></span></span><span style="display:flex;"><span><span style="color:#cb4b16"></span>    samtools view -SuF <span style="color:#2aa198">3844</span> - | <span style="color:#cb4b16">\
-</span></span></span><span style="display:flex;"><span><span style="color:#cb4b16"></span>    samtools sort - -T tmp -o HG00303_EUR_to_MGI_sorted.bam
+<div class="highlight"><pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#7f848e"># align, filter, convert and sort</span>
+</span></span><span style="display:flex;"><span>bwa mem -M -Y -t <span style="color:#d19a66">2</span> MGI358.SNP.fa HG00303_EUR.fastq.gz | <span style="color:#98c379">\
+</span></span></span><span style="display:flex;"><span><span style="color:#98c379"></span>    samtools view -SuF <span style="color:#d19a66">3844</span> - | <span style="color:#98c379">\
+</span></span></span><span style="display:flex;"><span><span style="color:#98c379"></span>    samtools sort - -T tmp -o HG00303_EUR_to_MGI_sorted.bam
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75"># index the bam file</span>
+</span></span><span style="display:flex;"><span><span style="color:#7f848e"># index the bam file</span>
 </span></span><span style="display:flex;"><span>samtools index HG00303_EUR_to_MGI_sorted.bam
 </span></span></code></pre></div><p>Finally, we could identify SNPs between your DNA and the reference using bcftools:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bcftools mpileup -f MGI358.SNP.fa HG00303_EUR_to_MGI_sorted.bam | <span style="color:#cb4b16">\
-</span></span></span><span style="display:flex;"><span><span style="color:#cb4b16"></span>    bcftools call -mv - &gt; HG00303_EUR_to_MGI_all.vcf
+<div class="highlight"><pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bcftools mpileup -f MGI358.SNP.fa HG00303_EUR_to_MGI_sorted.bam | <span style="color:#98c379">\
+</span></span></span><span style="display:flex;"><span><span style="color:#98c379"></span>    bcftools call -mv - &gt; HG00303_EUR_to_MGI_all.vcf
 </span></span></code></pre></div><p>The output is in a Variant Call Format (VCF). You can check the specification by <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf"><strong>clicking here</strong></a>. Your output file should look like this (I omitted a lot of header lines here):</p>
 <pre tabindex="0"><code>##fileformat=VCFv4.2
 ##FILTER=&lt;ID=PASS,Description=&#34;All filters passed&#34;&gt;
@@ -256,17 +256,17 @@ GRCh38.fa.fai
 GRCh38.fa.pac
 GRCh38.fa.sa
 </code></pre><p>The bwa index files are already there, so you don&rsquo;t need to index the reference <code>fasta</code> again. Now, let&rsquo;s pretend the <code>fastq</code> file you have is from the whole genome sequencing of yourself and map the reads to the whole genome and call variants. Basically, we are repreating the previous procedures using the whole genome as the reference:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#586e75"># align, filter, convert and sort</span>
-</span></span><span style="display:flex;"><span>bwa mem -M -Y -t <span style="color:#2aa198">2</span> GRCh38/GRCh38.fa HG00303_EUR.fastq.gz | <span style="color:#cb4b16">\
-</span></span></span><span style="display:flex;"><span><span style="color:#cb4b16"></span>    samtools view -SuF <span style="color:#2aa198">3844</span> - | <span style="color:#cb4b16">\
-</span></span></span><span style="display:flex;"><span><span style="color:#cb4b16"></span>    samtools sort - -T -o HG00303_EUR_to_GRCh38_sorted.bam
+<div class="highlight"><pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#7f848e"># align, filter, convert and sort</span>
+</span></span><span style="display:flex;"><span>bwa mem -M -Y -t <span style="color:#d19a66">2</span> GRCh38/GRCh38.fa HG00303_EUR.fastq.gz | <span style="color:#98c379">\
+</span></span></span><span style="display:flex;"><span><span style="color:#98c379"></span>    samtools view -SuF <span style="color:#d19a66">3844</span> - | <span style="color:#98c379">\
+</span></span></span><span style="display:flex;"><span><span style="color:#98c379"></span>    samtools sort - -T -o HG00303_EUR_to_GRCh38_sorted.bam
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75"># index the bam file</span>
+</span></span><span style="display:flex;"><span><span style="color:#7f848e"># index the bam file</span>
 </span></span><span style="display:flex;"><span>samtools index HG00303_EUR_to_GRCh38_sorted.bam
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75"># call variants</span>
-</span></span><span style="display:flex;"><span>bcftools mpileup -f GRCh38/GRCh38.fa HG00303_EUR_to_GRCh38_sorted.bam | <span style="color:#cb4b16">\
-</span></span></span><span style="display:flex;"><span><span style="color:#cb4b16"></span>    bcftools call -mv - &gt; HG00303_EUR_to_GRCh38_all.vcf
+</span></span><span style="display:flex;"><span><span style="color:#7f848e"># call variants</span>
+</span></span><span style="display:flex;"><span>bcftools mpileup -f GRCh38/GRCh38.fa HG00303_EUR_to_GRCh38_sorted.bam | <span style="color:#98c379">\
+</span></span></span><span style="display:flex;"><span><span style="color:#98c379"></span>    bcftools call -mv - &gt; HG00303_EUR_to_GRCh38_all.vcf
 </span></span></code></pre></div><p>Now the new VCF file <code>HG00303_EUR_to_GRCh38_all.vcf</code> looks like this:</p>
 <pre tabindex="0"><code>##fileformat=VCFv4.2
 ##FILTER=&lt;ID=PASS,Description=&#34;All filters passed&#34;&gt;
@@ -307,18 +307,18 @@ chr1    196145102       .       G       A       132     .       DP=6;VDB=0.06023
 </code></pre><p>The content in the current VCF file is slightly different from the previous one. The first column is now the chromosome names. The second column indicates the position of the SNP. Those are useful and important pieces of information. However, do the variants have any effect on our phenotypes? Do we know anything about them? In order to figue out that, we need to compare the variants to a database containing many SNPs that we know about. If the variant in your genome is present in the database, it is relative easy to find out what it does based on literatures.</p>
 <p>You probably noticed that the values in the third column of the current VCF file are all <code>.</code>. Now let&rsquo;s annotate the variant with the <code>rsXXXX</code> ID in the dbSNP database. First, we need the variants in the database in the VCF format. Go to the <a href="https://www.ncbi.nlm.nih.gov/snp/"><strong>dbSNP database</strong></a>, then click the <code>FTP Download</code> at the right hand side. Go all the way to the <code>organisms -&gt; human_9606_b151_GRCh38p7 -&gt; VCF</code> directory, and the <code>00-All.vcf.gz</code> file is what you need. However, it is really big, and I have prepared a subset that is enough for us to use in this section. You can download the truncated version (<a href="https://dbrg77.github.io/SUSTech-BIOS201/data/dbSNP_subset_formatted.vcf"><strong>dbSNP_subset_formatted.vcf</strong></a>) to your own compouter and put it under the <code>bios201</code> directory.</p>
 <p>Before we could perform the annotation, we need to compress and index the VCF files using <code>bgzip</code> and <code>tabix</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#586e75"># compress with bgzip</span>
+<div class="highlight"><pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#7f848e"># compress with bgzip</span>
 </span></span><span style="display:flex;"><span>bgzip HG00303_EUR_to_GRCh38_all.vcf
 </span></span><span style="display:flex;"><span>bgzip dbSNP_subset_formatted.vcf
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75"># index the file</span>
-</span></span><span style="display:flex;"><span>tabix -s <span style="color:#2aa198">1</span> -b <span style="color:#2aa198">2</span> -e <span style="color:#2aa198">2</span> -p vcf HG00303_EUR_to_GRCh38_all.vcf.gz
-</span></span><span style="display:flex;"><span>tabix -s <span style="color:#2aa198">1</span> -b <span style="color:#2aa198">2</span> -e <span style="color:#2aa198">2</span> -p vcf dbSNP_subset_formatted.vcf.gz
+</span></span><span style="display:flex;"><span><span style="color:#7f848e"># index the file</span>
+</span></span><span style="display:flex;"><span>tabix -s <span style="color:#d19a66">1</span> -b <span style="color:#d19a66">2</span> -e <span style="color:#d19a66">2</span> -p vcf HG00303_EUR_to_GRCh38_all.vcf.gz
+</span></span><span style="display:flex;"><span>tabix -s <span style="color:#d19a66">1</span> -b <span style="color:#d19a66">2</span> -e <span style="color:#d19a66">2</span> -p vcf dbSNP_subset_formatted.vcf.gz
 </span></span></code></pre></div><p>You will see the VCF files are compressed into the <code>.gz</code> files and for each of them, there is a <code>.tbi</code> index file. Now, you are ready to annotate your own VCF using bcftools:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bcftools annotate -c ID -O v <span style="color:#cb4b16">\
-</span></span></span><span style="display:flex;"><span><span style="color:#cb4b16"></span>                  -a dbSNP_subset_formatted.vcf.gz <span style="color:#cb4b16">\
-</span></span></span><span style="display:flex;"><span><span style="color:#cb4b16"></span>                  -o HG00303_EUR_to_GRCh38_all_annotated.vcf <span style="color:#cb4b16">\
-</span></span></span><span style="display:flex;"><span><span style="color:#cb4b16"></span>                  HG00303_EUR_to_GRCh38_all.vcf.gz
+<div class="highlight"><pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bcftools annotate -c ID -O v <span style="color:#98c379">\
+</span></span></span><span style="display:flex;"><span><span style="color:#98c379"></span>                  -a dbSNP_subset_formatted.vcf.gz <span style="color:#98c379">\
+</span></span></span><span style="display:flex;"><span><span style="color:#98c379"></span>                  -o HG00303_EUR_to_GRCh38_all_annotated.vcf <span style="color:#98c379">\
+</span></span></span><span style="display:flex;"><span><span style="color:#98c379"></span>                  HG00303_EUR_to_GRCh38_all.vcf.gz
 </span></span></code></pre></div><p>The program will look at the variants in your own VCF and the dbSNP database VCF files and compare them to see if they are the same. If yes, then the program will replace the <code>.</code> in the third column of your VCF with the ID from the dbSNP VCF (<em>i.e.</em> the <code>rsXXXX</code> ID). The advantage is that those IDs are unique and everybody is using them. You can easily communicate with others and look at the potential effect in the database.</p>
 <p>Now look inside your annoated VCF file, do you notice something different? You probably see that the third column of a lot of the records is replaced by the <code>rsXXXX</code> ID, while some of them still remain as <code>.</code>, which means it does not match any record in the dbSNP database. There are many reasons for this, and you can think about this by yourself.</p>
 <h3 id="practice-1">Practice</h3>
@@ -351,7 +351,7 @@ chr1    196145102       .       G       A       132     .       DP=6;VDB=0.06023
     
 
         </main><footer class="footer">
-    <span>&copy; 2022 SUSTech BIOS201</span>
+    <span>&copy; 2023 SUSTech BIOS201</span>
     <span>
         Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/526avijitgupta/gokarna">Gokarna</a>
     </span>
